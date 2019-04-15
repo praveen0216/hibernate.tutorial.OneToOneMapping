@@ -13,44 +13,40 @@ public class DeleteInstructorDetailDemo {
 
 		// create session factory
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Instructor.class)
-				.addAnnotatedClass(InstructorDetail.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(InstructorDetail.class).buildSessionFactory();
 
 		// create session object
 		Session session = factory.getCurrentSession();
 
 		try {
-			
-			
-			
-			//start the transaction
+
+			// start the transaction
 			session.beginTransaction();
-			
-			//get the instructor detail object
-			int theId=4;
-			
-			InstructorDetail tempInstructorDetail =session.get(InstructorDetail.class,theId );
-			
-			//print the instructor detail
-			System.out.println("instructordetails : "+tempInstructorDetail);
-			
-			//print the associated instructor
-			System.out.println("associatedInstructor : " + tempInstructorDetail.getInstructor() );
-			
-			//now delete the instructor detail
-			System.out.println("Deleting tempInstructorDetail : "+tempInstructorDetail);
-			
-			//remove the association object reference  : break bi-directional link
+
+			// get the instructor detail object
+			int theId = 4;
+
+			InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class, theId);
+
+			// print the instructor detail
+			System.out.println("instructordetails : " + tempInstructorDetail);
+
+			// print the associated instructor
+			System.out.println("associatedInstructor : " + tempInstructorDetail.getInstructor());
+
+			// now delete the instructor detail
+			System.out.println("Deleting tempInstructorDetail : " + tempInstructorDetail);
+
+			// remove the association object reference : break bi-directional link
 			tempInstructorDetail.getInstructor().setInstructorDetail(null);
-			
+
 			session.delete(tempInstructorDetail);
-			
-			//commit transaction
+
+			// commit transaction
 			session.getTransaction().commit();
-			
+
 			System.out.println("Done!!");
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 

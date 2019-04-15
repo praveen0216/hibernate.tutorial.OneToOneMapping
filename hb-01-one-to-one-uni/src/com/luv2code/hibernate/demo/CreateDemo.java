@@ -13,36 +13,32 @@ public class CreateDemo {
 
 		// create session factory
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Instructor.class)
-				.addAnnotatedClass(InstructorDetail.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(InstructorDetail.class).buildSessionFactory();
 
 		// create session object
 		Session session = factory.getCurrentSession();
 
 		try {
-			// create a  object
-			Instructor tempInstructor = new Instructor("Prat","hot","ph@gmail.com");	
-			
-			InstructorDetail tempInstructorDetail =
-					new InstructorDetail("http://www.seeyousoon.com/youtube","luv 2 luv");
-			
-			
-			//associate the objects
-			
+			// create a object
+			Instructor tempInstructor = new Instructor("Prat", "hot", "ph@gmail.com");
+
+			InstructorDetail tempInstructorDetail = new InstructorDetail("http://www.seeyousoon.com/youtube",
+					"luv 2 luv");
+
+			// associate the objects
+
 			tempInstructor.setInstructorDetail(tempInstructorDetail);
-			
-			
-			//start the transaction
+
+			// start the transaction
 			session.beginTransaction();
-			
-			
-			//save the instructor : this will also save object in table 2 due to cascade
-			
-			System.out.println("Saving instructor: "+tempInstructor);
+
+			// save the instructor : this will also save object in table 2 due to cascade
+
+			System.out.println("Saving instructor: " + tempInstructor);
 			session.save(tempInstructor);
-			//commit transaction
+			// commit transaction
 			session.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
 
